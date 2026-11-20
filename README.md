@@ -4,6 +4,8 @@
 
 Bir elektrik ve güneş enerjisi firması (KLC Güneş Enerjisi) için tasarımdan yayına kadar geliştirdiğim kurumsal web sitesi ve yönetim paneli. Sitede görünen her metni, görseli, menüyü ve rengi firma kendi panelinden yönetiyor.
 
+**Canlı site:** [klcenerjiinsaat.com](https://klcenerjiinsaat.com/)
+
 > Kaynak kod müşteriye ait olduğu için bu depoda paylaşılmıyor. Burada projeyi, mimarisini ve neler öğrendiğimi anlatıyorum. İstenirse kodu bir görüşmede ekran paylaşarak gösterebilirim.
 
 ![Ana sayfa](docs/gorseller/ana-sayfa.gif)
