@@ -2,7 +2,9 @@
 
 ![Java](https://img.shields.io/badge/Java-21-orange) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-blue) ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED) ![Lisans](https://img.shields.io/badge/Lisans-MIT-lightgrey)
 
-Bir elektrik ve güneş enerjisi firması (KLC Güneş Enerjisi) için tasarımdan yayına kadar geliştirdiğim kurumsal web sitesi ve yönetim paneli. Sitede görünen her metni, görseli, menüyü ve rengi firma kendi panelinden yönetiyor.
+Bir elektrik ve güneş enerjisi firması (KLC Güneş Enerjisi) için sıfırdan geliştirdiğim, yönetim panelli kurumsal web sitesi. Sitede görünen her metni, görseli, menüyü ve rengi firma kendi panelinden yönetiyor.
+
+**İş bölümü:** Ön yüzü (arayüz tasarımı, HTML/CSS/JS) Claude Code'da Opus 5.5 ile hazırladım. Backend'i, yani veritabanını, yönetim API'sini, güvenliği, testleri ve sunucu kurulumunu ben geliştirdim.
 
 **Canlı site:** [klcenerjiinsaat.com](https://klcenerjiinsaat.com/)
 
@@ -10,7 +12,7 @@ Bir elektrik ve güneş enerjisi firması (KLC Güneş Enerjisi) için tasarımd
 
 ![Ana sayfa](docs/gorseller/ana-sayfa.gif)
 
-**Tanıtım videosu:** [docs/tanitim-videosu.mp4](docs/tanitim-videosu.mp4) (79 saniye)
+**Tanıtım videosu:** [docs/tanitim-videosu.mp4](docs/tanitim-videosu.mp4) (83 saniye)
 
 ## Teknolojiler
 
@@ -19,8 +21,8 @@ Bir elektrik ve güneş enerjisi firması (KLC Güneş Enerjisi) için tasarımd
 | Dil | Java 21 |
 | Çatı | Spring Boot 3.5, Spring MVC, Spring Data JPA, Spring Security |
 | Arayüz | Thymeleaf (sunucu tarafı), yönetim paneli için ayrı bir tek sayfalık arayüz |
-| Veritabanı | PostgreSQL 17, şema sürümleri Flyway ile (20 migration) |
-| Kimlik doğrulama | JWT, BCrypt, rol tabanlı yetki (ADMIN / EDITOR) |
+| Veritabanı | PostgreSQL 17, şema sürümleri Flyway ile (23 migration) |
+| Kimlik doğrulama | Yönetim API'si için JWT, BCrypt, rol tabanlı yetki (ADMIN / EDITOR) |
 | Önbellek | Caffeine |
 | Testler | JUnit 5, Mockito, Testcontainers, GreenMail |
 | Yayın | Docker Compose, Caddy (otomatik HTTPS), GitHub Actions |
@@ -29,13 +31,14 @@ Bir elektrik ve güneş enerjisi firması (KLC Güneş Enerjisi) için tasarımd
 
 **Site**
 - **Yönetilebilir ana sayfa:** Slider, referans şeridi, hizmet kartları, projeler, kariyer bandı, sayaçlar, çalışma süreci ve teklif bölümü. Bölümlerin sırası, açık/kapalı durumu ve başlıkları panelden değişiyor.
-- **Hizmet ve proje sayfaları:** Her hizmetin ve projenin kendi sayfası var. Projeler Türkiye haritasında il il gösteriliyor ve hizmete göre filtreleniyor.
+- **Hizmet ve proje sayfaları:** Her hizmetin ve projenin kendi sayfası var. Projeler hizmete göre filtreleniyor.
+- **Proje haritası:** Projeler Türkiye haritasında il il gösteriliyor. Sisteme girilmemiş eski işlerin illeri ve sayıları panelden ekleniyor; sitede görünen rakam, bu sayı ile yayındaki projelerin toplamı. Yeni proje yayına alındıkça rakamlar kendiliğinden artıyor, hizmet bazında rakamlar da eklenebiliyor.
 - **Açık ve koyu tema:** Ziyaretçi tek tıkla seçiyor, tercih hatırlanıyor.
 - **Türkçe ve İngilizce:** İngilizce sürüm `/en` altında. Arayüz yazıları da veritabanından iki dilde geliyor.
 - **Formlar:** İletişim/teklif formu ve CV yüklemeli iş başvuru formu. Gelen kayıtlar panele düşüyor, istenirse e-posta bildirimi gidiyor.
 - **Bakım modu:** Panelden tek tuşla açılan, sitenin kimliğini taşıyan bir bakım sayfası.
 - **Açılış animasyonu:** Logo çiziliyor, perde kalkıyor. Oturumda bir kez oynuyor; "hareket azaltma" tercihi açıksa hiç oynamıyor.
-- **SEO:** Sayfa bazında başlık ve açıklama, canonical, hreflang, yapılandırılmış veri, `sitemap.xml` ve `robots.txt`.
+- **SEO:** Sayfa bazında başlık ve açıklama, canonical, hreflang, yapılandırılmış veri, `sitemap.xml`, `robots.txt` ve yapay zekâ araçları için `llms.txt`.
 
 **Yönetim paneli**
 - **İçerik yönetimi:** Hizmetler, projeler (galeriyle), sayfalar, ekip, referanslar, sertifikalar, markalar, slider, sayaçlar ve menüler.
@@ -44,12 +47,14 @@ Bir elektrik ve güneş enerjisi firması (KLC Güneş Enerjisi) için tasarımd
 - **İstatistikler:** Günlük ziyaretçi, en çok görüntülenen sayfalar, mobil oranı. Çerez kullanmadan, IP saklamadan tutuluyor.
 - **Çöp kutusu ve sürümler:** Silinen kayıt geri alınabiliyor, eski sürüme dönülebiliyor.
 - **Önizleme ve işlem kaydı:** Değişiklik yayına almadan önizlenebiliyor; panelde kimin neyi değiştirdiği kayıt altında.
+- **Google görünümü (SEO) ekranı:** Her sayfanın Google sonucunda nasıl görüneceği yazarken önizleniyor; başlık ve açıklama için karakter sayacı var.
 - **Yapılacaklar listesi:** Eksik iletişim bilgisi, örnek içerik ya da SEO açıklaması olmayan sayfa gibi eksikleri panelin ana ekranında gösteriyor.
-- **Roller:** Firma kendi içeriğini EDITOR hesabıyla yönetiyor; kullanıcılar, yedekler ve SEO gibi bölümler yalnızca ADMIN'e açık.
+- **Roller:** Firma içeriğini ve SEO ayarlarını EDITOR hesabıyla yönetiyor; kullanıcılar, yedekler, menüler, işlem kaydı, kalıcı silme ile görünüm ve bakım modu ayarları yalnızca ADMIN'e açık.
 
 **Güvenlik ve işletme**
-- Yanlış e-posta ve yanlış şifre aynı hatayı veriyor; şifre değişince eski oturumlar hemen geçersiz oluyor.
+- Yanlış e-posta ve yanlış şifre aynı hatayı veriyor. JWT durumsuz olduğu için kullanıcıda bir `token_version` tutuluyor; şifre değişince bu sayı artıyor ve eski oturumlar hemen geçersiz oluyor.
 - Formlarda doğrulama, gizli tuzak alanı ve IP başına oran sınırı var.
+- Sitede hiç bulunmayan `.php`, `.env`, `.git` gibi adresleri yoklayan bot istekleri uygulamaya ulaşmadan bir filtrede reddediliyor.
 - Yüklemelerde uzantı, içerik türü ve dosya imzası birlikte kontrol ediliyor; CV'ler herkese açık adresten verilmiyor.
 - Content-Security-Policy ve diğer güvenlik başlıkları, HSTS.
 - Gizli değerler ortam değişkeninde; eksik ya da zayıfsa uygulama yayın modunda hiç başlamıyor.
@@ -70,9 +75,15 @@ Bir elektrik ve güneş enerjisi firması (KLC Güneş Enerjisi) için tasarımd
 
 **Müşteri paneli**
 
-| İstatistikler | Hizmet listesi | Düzenleme ekranı |
-| :-: | :-: | :-: |
-| ![İstatistikler](docs/gorseller/panel-istatistik.jpg) | ![Hizmet listesi](docs/gorseller/panel-hizmetler.jpg) | ![Düzenleme ekranı](docs/gorseller/panel-duzenleme.jpg) |
+| İstatistikler | Yeni içerik ekleme |
+| :-: | :-: |
+| ![İstatistikler](docs/gorseller/panel-istatistik.jpg) | ![Yeni içerik ekleme](docs/gorseller/panel-duzenleme.jpg) |
+| **Google görünümü (SEO)** | **Hizmet listesi** |
+| ![Google görünümü](docs/gorseller/panel-seo.jpg) | ![Hizmet listesi](docs/gorseller/panel-hizmetler.jpg) |
+
+| Projeler sayfasındaki rakamlar ve haritada işaretli iller |
+| :-: |
+| ![Proje rakamları](docs/gorseller/panel-proje-rakamlari.jpg) |
 
 ## Mimari
 
@@ -95,6 +106,8 @@ Tek bir Spring Boot uygulaması hem siteyi hem yönetim API'sini sunuyor. Bağı
 - **Gerçek veritabanıyla test:** Uçtan uca testler Testcontainers ile gerçek bir PostgreSQL 17 açıp koşuyor; e-posta bildirimleri de test içinde çalışan bir SMTP sunucusuna (GreenMail) gönderilip okunuyor.
 - **İşlem bitince e-posta:** Form kaydı commit edilmeden e-posta gönderilirse, kayıt geri alındığında boşuna bildirim gidiyor. Bunu bir olay yayınlayıp `@TransactionalEventListener(AFTER_COMMIT)` ve `@Async` ile çözdüm.
 - **Küçük sunucuda yayın:** 2 GB RAM'de Java, PostgreSQL ve Caddy'yi birlikte çalıştırmak için JVM heap'ini konteyner sınırına göre ayarladım ve PostgreSQL ayarlarını küçülttüm.
+- **Elle girilen rakam ile hesaplanan rakamı ayırmak:** Firma, sitede olmayan eski işlerini de saymak istedi. Toplamı elle girdirmek yerine panelde yalnızca eski işlerin sayısını tutuyorum; sitede görünen rakam bu sayı ile yayındaki projelerin toplamı. Böylece yeni proje eklenince kimsenin rakamı güncellemeyi hatırlaması gerekmiyor.
+- **Yayına alma:** Alan adını sunucuya bağlamak, SSH, Docker ile kurulum, HTTPS ve Search Console adımlarında Opus 5.5'i bir mentor gibi kullandım; her komutun ne yaptığını ve nedenini sorarak ilerledim.
 - **Güvenlik varsayılanları:** Yayın modunda eksik ya da örnek değerli bir gizli ayarla uygulamanın hiç açılmaması, yanlış yapılandırmayla yayına çıkmaktan daha güvenli.
 
 ## Lisans
